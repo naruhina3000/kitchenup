@@ -18,4 +18,14 @@ class Kitchen < ApplicationRecord
   validates :cancellation_policy, inclusion: { in: POLICY }
   validates :opening_time, presence: true
   validates :closing_time, presence: true
+
+# @ controller, show kitchen page
+
+#  @ kitchen.incement_view
+
+  def increment_view
+    self.view = view ? (view + 1) : 1
+    save
+  end
+
 end
