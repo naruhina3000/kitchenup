@@ -7,9 +7,9 @@ Rails.application.routes.draw do
     resources :favorites, only: [:create]
   end
 
-  resources :favorites, only: [:destroy]
+  resources :favorites, only: [:index, :destroy]
 
-  resources :bookings, only: [:show, :new, :edit] do
+  resources :bookings, only: [:index, :show, :new, :edit] do
     resources :reviews, only: [:create, :update]
   end
   post "/bookings/:id", to: "bookings#clean", as: :clean_kitchen
