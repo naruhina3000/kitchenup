@@ -26,6 +26,7 @@ class KitchensController < ApplicationController
   private
 
   def set_kitchen
-    params.require(:list).permit(:name, :photos)
+    params.require(:list).permit(:title, :description, :size, :listing_status,
+    :address, :price, :cancellation_policy, :opening_time, :closing_time, :photos)
   end
 end
