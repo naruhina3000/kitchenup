@@ -1,8 +1,8 @@
 class Kitchen < ApplicationRecord
   belongs_to :user
-  has_many :kitchen_amenities
+  has_many :kitchen_amenities, dependent: :destroy
   has_many :amenities, through: :kitchen_amenities
-  has_many :bookings
+  has_many :bookings, dependent: :destroy
   has_many :reviews, through: :bookings
 
 
@@ -22,6 +22,11 @@ class Kitchen < ApplicationRecord
 # @ controller, show kitchen page
 
 #  @ kitchen.incement_view
+  def unavailable_dates
+    bookings.pluck(:start_date, :end_date).map do |range|
+      { from: range[0], to: range[1] }
+    end
+  end
 
   def increment_view
     self.view = view ? (view + 1) : 1

@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   get "/search", to: "kitchens#search", as: :search_kitchen
   post "/bookings/:id", to: "bookings#clean", as: :clean_kitchen
   get "/bookings/:id", to: "bookings#status", as: :booking_status
+  get "/users/:id", to: "users#show", as: :user
 
 end

@@ -1,2 +1,26 @@
-<h1>Kitchen#show</h1>
-<p>Find me in app/views/kitchen/show.html.erb</p>
+
+
+<div class="container py-3">
+  <h1><%= @kitchen.title %></h1>
+  <p class="card-text">
+    <%= @kitchen.description %>
+    <br>
+    <%= @kitchen.address %> | <%= @kitchen.size %>
+  </p>
+  <hr>
+  <h4>Rent <%= @kitchen.title %></h4>
+    <div id='kitchen-booking-dates' data-unavailable="<%= @kitchen.unavailable_dates.to_json %>">
+        <% if current_user.id != @kitchen.user_id  %>
+           <%= simple_form_for([@kitchen, @booking]) do |f| %>
+               <%= f.input :start_date, as: :string, type: :text %>
+               <%= f.input :end_date, as: :string, type: :text %>
+               <%= f.submit "Rent", class: "btn btn-primary" %>
+            <% end %>
+        <% end %>
+    </div>
+  <hr>
+  <%#= link_to "Back", user_path, class: "btn btn-warning" %>
+</div>
+
+
+
