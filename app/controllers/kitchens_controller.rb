@@ -15,7 +15,8 @@ class KitchensController < ApplicationController
     if @kitchen.update(kitchen_params)
       redirect_to @kitchen
     else
-    render "edit"
+      render "edit"
+    end
   end
 
   def new
@@ -28,7 +29,7 @@ class KitchensController < ApplicationController
     @kitchen.user = @user
     if @kitchen.save
     redirect_to @kitchen
-    else 
+    else
      render 'new'
     end
   end
