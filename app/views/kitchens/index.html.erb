@@ -6,8 +6,8 @@
                     <%# image cloudinary %>
                     <div class="card-body">
                         <h5 class="card-title"><%= kitchen.title %></h5>
-                        <p class="card-text"></p>
-                        <%= link_to "See more", kitchen, class: "btn btn-primary" %>
+                        <p class="card-text" style="height: 50px"><%= kitchen.description.truncate(50) %></p>
+                        <%= link_to "See more", kitchen, class: "btn btn-info" %>
                     </div>
                 </div>
             </div>
