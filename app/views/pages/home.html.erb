@@ -1,2 +1,21 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.3)), url(<%= image_path 'banner.jpg' %>);">
+  <div class="container mt-5">
+    <form novalidate="novalidate" class="simple_form search" action="/" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+      <div class="search-form-control form-group mx-auto" style="width: 75%">
+        <input class="form-control string required" style="opacity:0.7" type="text" name="search[query]" id="search_query" />
+        <button name="button" type="submit" class="btn btn-flat">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row mx-auto my-auto py-auto justify-content-center align-items-center">
+      <h1 style="text-shadow: 2px 2px #000000; margin-right: 16px">You <span class="text-info"><em><strong>cook</strong></em></span> and we</h1>
+      <span class="form-control" id="banner-typed-text" style="width: 20%; opacity: 0.7;">handle the rest</span>
+    </div>
+  </div>
+</div>
+
