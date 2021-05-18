@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-  before_action :set_booking, only: [:show, :edit]
+  before_action :set_booking, only: [:show, :edit, :clean, :status]
 
   def show
   end
@@ -12,6 +12,7 @@ class BookingsController < ApplicationController
   end
 
   def create
+
   end
 
   def clean

@@ -39,6 +39,10 @@ class KitchensController < ApplicationController
     redirect_to kitchens_path
   end
 
+  def search
+    @kitchens = Kitchen.where('address LIKE ?', "%#params[:query]%")
+  end
+
   private
 
   def set_kitchen
@@ -46,7 +50,7 @@ class KitchensController < ApplicationController
   end
 
   def kitchen_params
-    params.require(:booking).permit(:title, :description, :size, :listing_status,
+    params.require(:kitchen).permit(:title, :description, :size, :listing_status,
     :address, :price, :cancellation_policy, :opening_time, :closing_time, :photos)
   end
 end
