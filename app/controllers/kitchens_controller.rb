@@ -9,6 +9,7 @@ class KitchensController < ApplicationController
   end
 
   def edit
+    amenities_list
   end
 
   def update
@@ -21,6 +22,7 @@ class KitchensController < ApplicationController
 
   def new
     @kitchen = Kitchen.new
+    amenities_list
   end
 
   def create
@@ -44,6 +46,12 @@ class KitchensController < ApplicationController
   end
 
   private
+
+  def amenities_list
+    @kitchen_amenity = KitchenAmenity.new
+    @used_amenity_id = @kitchen.tags.pluck(:id)
+    @free_amenity = Amenity.where.not(id: @used_tags_id)
+  end
 
   def set_kitchen
     @kitchen = Kitchen.find(params[:id])
