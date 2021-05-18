@@ -1,6 +1,11 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :edit, :clean, :status]
 
+  # def index
+  #   @bookings = Booking.all
+  # end
+
+
   def show
   end
 
@@ -8,14 +13,24 @@ class BookingsController < ApplicationController
 
   end
 
-  def new
-
-  end
+  # def new
+  #   @booking = Booking.new
+  #   @kitchen = Kitchen.find(params[:kitchen_id])
+  # end
 
   def create
-
-
+    @booking = Booking.new(booking_params)
+    @kitchen = Kitchen.find(params[:kitchen_id])
+    @user = current_user
+    @booking.kitchen = @kitchen
+    @booking.user = @user
+    if @booking.save
+      redirect_to current_user
+    else
+      render "/kitchens/show"
+    end
   end
+
 
   def clean
   end
@@ -34,6 +49,3 @@ class BookingsController < ApplicationController
   end
 
 end
-
-
-a booking has one user & one kitchen.
