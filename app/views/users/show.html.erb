@@ -14,6 +14,8 @@
               <br>
               <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
               <br>
+              <%= link_to "Edit Booking", booking_path, class: "btn btn-info" %>
+              <hr>
               <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
           </div>
         </div>
