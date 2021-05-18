@@ -1,0 +1,23 @@
+<div class="container py-5">
+  <h1>My Bookings</h1>
+  <%= link_to "Rent a kitchen", kitchens_path, class: "btn btn-primary my-4" %>
+  <div class="row">
+    <% @bookings.each do |booking| %>
+      <div class="col-md-4 my-4">
+        <div class="card" style="width: 100%;">
+          <div class="card-body">
+            <h5 class="card-title"><%= booking.kitchen.title %></h5>
+            <p class="card-text">
+              <%= booking.kitchen.description %>
+              <br>
+              <%= booking.kitchen.address %> | <%= booking.booking_status %>
+              <br>
+              <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
+              <br>
+              <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
