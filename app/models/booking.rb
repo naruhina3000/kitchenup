@@ -9,12 +9,6 @@ class Booking < ApplicationRecord
 
   validate :end_date_after_start_date
 
-  before_validation :generate_confirmation_code
-
-  def generate_confirmation_code
-    self.confirmation_code = rand(36**6).to_s(36).upcase
-  end
-
   private
 
   def end_date_after_start_date

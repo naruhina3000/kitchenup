@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
     def show
-      @bookings = Booking.where('user_id = ?', current_user.id )
+      @user = User.find(params[:id])
+      @bookings = Booking.where('user_id = ?', @user )
+      @bookings_received = Booking.joins(:kitchen).where(kitchens: {user: @user})
     end
 end
