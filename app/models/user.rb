@@ -6,9 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable
 
   has_many :kitchens, dependent: :destroy
-  has_many :bookings
-  has_many :favorites
-  has_many :reviews
+  has_many :bookings, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   validates :user_name, presence: true, uniqueness: true
   validates :first_name, presence: true
