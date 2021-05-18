@@ -13,9 +13,13 @@
             <%= f.input :price %><p>$ / Day</p>
             <%= f.input :cancellation_policy, collection: Kitchen::POLICY %>
             <%= f.input :listing_status, collection: Kitchen::STATUS %>
+            <%= f.input :amenity, collection: @free_amenities.map {|amenity| [amenity.name, amenity.id]}, input_html: { multiple: true } %>
+
             <%= f.submit "List Kitchen", class:"btn btn-primary" %>
           <% end %>
       </div>
+          <%#= f.association :tag, label: "Add a tag", input_html: { multiple: true } %>
+          <!-- if you want to change the input, input_html. if want to change the wrapper, wrapper_html -->
       <hr>
       <%= link_to "Back", kitchens_path, class: "btn btn-warning" %>
     </div>
