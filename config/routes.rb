@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :bookings, only: [:index, :show, :new, :edit] do
     resources :reviews, only: [:create, :update]
   end
+  get "/search", to: "kitchens#search", as: :search_kitchen
   post "/bookings/:id", to: "bookings#clean", as: :clean_kitchen
   get "/bookings/:id", to: "bookings#status", as: :booking_status
 
