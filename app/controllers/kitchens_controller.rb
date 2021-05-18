@@ -14,6 +14,7 @@ class KitchensController < ApplicationController
 
   def update
     if @kitchen.update(kitchen_params)
+      create_amenities(params)
       redirect_to @kitchen
     else
       render "edit"
@@ -30,7 +31,8 @@ class KitchensController < ApplicationController
     @user = current_user
     @kitchen.user = @user
     if @kitchen.save
-    redirect_to @kitchen
+      create_amenities(params)
+      redirect_to @kitchen
     else
      render 'new'
     end
@@ -47,10 +49,14 @@ class KitchensController < ApplicationController
 
   private
 
+  def create_amenities(params)
+    params[:kitchen][:amenities][1..-1].each {|amenity_id |  KitchenAmenity.create(kitchen: @kitchen, amenity_id: amenity_id)}
+  end
+
   def amenities_list
     @kitchen_amenity = KitchenAmenity.new
-    @used_amenity_id = @kitchen.tags.pluck(:id)
-    @free_amenity = Amenity.where.not(id: @used_tags_id)
+    @used_amenity_id = @kitchen.amenities.pluck(:id)
+    @free_amenities = Amenity.where.not(id: @used_amenity_id)
   end
 
   def set_kitchen
