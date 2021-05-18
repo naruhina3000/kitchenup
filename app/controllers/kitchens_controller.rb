@@ -1,5 +1,8 @@
 class KitchensController < ApplicationController
+  before_action :set_kitchen, only: [:show, :edit, :update, :destroy]
+
   def index
+    @kitchens = Kitchen.all
   end
 
   def show
@@ -18,5 +21,11 @@ class KitchensController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def set_kitchen
+    params.require(:list).permit(:name, :photos)
   end
 end
