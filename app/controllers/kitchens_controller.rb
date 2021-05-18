@@ -41,7 +41,7 @@ class KitchensController < ApplicationController
   end
 
   def destroy
-    @ktchen.destroy
+    @kitchen.destroy
     redirect_to kitchens_path
   end
 
