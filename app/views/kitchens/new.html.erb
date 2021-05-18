@@ -13,7 +13,9 @@
             <%= f.input :price %><p>$ / Day</p>
             <%= f.input :cancellation_policy, collection: Kitchen::POLICY %>
             <%= f.input :listing_status, collection: Kitchen::STATUS %>
-            <%= f.input :amenity, collection: @free_amenities.map {|amenity| [amenity.name, amenity.id]}, input_html: { multiple: true } %>
+            <%= f.input :amenities, as: :check_boxes, collection: @free_amenities, input_html: { multiple: true } %>
+            <%#= f.input :amenities, collection: @free_amenities.map {|amenity| [amenity.name, amenity.id]}, input_html: { multiple: true } %>
+            <!-- collection: @free_amenities.map {|amenity| [amenity.name, amenity.id]},  -->
 
             <%= f.submit "List Kitchen", class:"btn btn-primary" %>
           <% end %>
