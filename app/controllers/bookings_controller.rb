@@ -5,13 +5,15 @@ class BookingsController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def new
+
   end
 
   def create
+
 
   end
 
@@ -32,3 +34,6 @@ class BookingsController < ApplicationController
   end
 
 end
+
+
+a booking has one user & one kitchen.
