@@ -12,8 +12,9 @@ Rails.application.routes.draw do
   resources :bookings, only: [:index, :show, :new, :edit] do
     resources :reviews, only: [:create, :update]
     member do
+      patch :accept
       patch :confirm
-      patch :decline
+      patch :cancel
     end
   end
   get "/search", to: "kitchens#search", as: :search_kitchen
