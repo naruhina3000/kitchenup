@@ -4,6 +4,15 @@ class KitchensController < ApplicationController
 
   def index
     @kitchens = Kitchen.all
+
+    @markers = @kitchens.geocoded.map do |kitchen|
+      {
+        lat: kitchen.latitude,
+        lng: kitchen.longitude,
+        infoWindow: render_to_string(partial: "info_window", locals: { kitchen: kitchen }),
+        image_url: helpers.asset_url('kitchen.svg')
+      }
+    end
   end
 
   def show

@@ -1,5 +1,6 @@
 require 'faker'
 
+Favorite.destroy_all
 User.destroy_all
 Kitchen.destroy_all
 Booking.destroy_all
@@ -38,8 +39,8 @@ puts "Database clean!"
             title: Faker::Space.planet + rand(1..10000).to_s,
             description: Faker::Quote.yoda,
             size: rand(30..300),
-            listing_status: ["listed", "snooze", "unlisted", "deactivate"].sample,
-            address: Faker::Address.full_address,
+            listing_status: ["listed", "snooze", "unlisted"].sample,
+            address: ["Munich, Marienplatz", "Garching", "Munich, Englischer Garten", "Wolfratshausen","Erding"].sample,
             price: rand(30..300), 
             cancellation_policy: ["flexible", "moderate", "strict"].sample,
             opening_time: rand(5..12),
