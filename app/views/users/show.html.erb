@@ -1,29 +1,78 @@
-<div class="container py-5">
-  <h1>My Bookings</h1>
-  <%= link_to "Rent a kitchen", kitchens_path, class: "btn btn-primary my-4" %>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+    <a class="nav-item nav-link" id="nav-bookings-tab" data-toggle="tab" href="#nav-bookings" role="tab" aria-controls="nav-bookings" aria-selected="false">My Bookings</a>
+    <a class="nav-item nav-link" id="nav-bookings-received-tab" data-toggle="tab" href="#nav-bookings-received" role="tab" aria-controls="nav-bookings-received" aria-selected="false">Bookings Received</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+  <div class="tab-pane fade" id="nav-bookings" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <div class="container py-5">
+      <h1>My Bookings</h1>
+      <%= link_to "Rent a kitchen", kitchens_path, class: "btn btn-primary my-4" %>
 
-  <%# if current_user == @user %>
+      <%# if current_user == @user %>
 
-  <%# end %>
-  <div class="row">
-    <% @bookings.each do |booking| %>
-      <div class="col-md-4 my-4">
-        <div class="card" style="width: 100%;">
-          <div class="card-body">
-            <h5 class="card-title"><%= booking.kitchen.title %></h5>
-            <p class="card-text">
-              <%= booking.kitchen.description %>
-              <br>
-              <%= booking.kitchen.address %> | <%= booking.booking_status %>
-              <br>
-              <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
-              <br>
-              <%= link_to "Edit Booking", booking_path, class: "btn btn-info" %>
-              <hr>
-              <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
+      <%# end %>
+      <div class="row">
+        <% @bookings_requested.each do |booking| %>
+          <div class="col-md-4 my-4">
+            <div class="card" style="width: 100%;">
+              <div class="card-body">
+                <h5 class="card-title"><%= booking.kitchen.title %></h5>
+                <p class="card-text">
+                  <%= booking.kitchen.address %> | <%= booking.booking_status %>
+                  <br>
+                  <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
+                  <br>
+                  <%= link_to "See Booking Details", booking_path(booking), class: "btn btn-info" %>
+                  <hr>
+                  <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
+              </div>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
+
+  </div>
+  <div class="tab-pane fade" id="nav-bookings-received" role="tabpanel" aria-labelledby="nav-bookings-received-tab">
+  <div class="container py-5">
+  <h1>Bookings Received</h1>
+    <div class="row">
+      <% @bookings_received.each do |booking| %>
+        <div class="col-md-4 my-4">
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <h5 class="card-title"><%= booking.kitchen.title %></h5>
+              <p class="card-text">
+                <%= booking.user %>
+                <br>
+                <%= booking.kitchen.address %> | <%= booking.booking_status %>
+                <br>
+                <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
+                <br>
+
+                  <%= link_to "Confirm", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
+                  <%= link_to "Decline", "#", class: "btn btn-info" %>
+                <hr>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+  </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+

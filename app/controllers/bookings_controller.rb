@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-  before_action :set_booking, only: [:show, :edit, :clean, :status]
+  before_action :set_booking, only: [:edit, :show, :clean, :status, :confirm]
 
   # def index
   #   @bookings = Booking.all
@@ -7,10 +7,17 @@ class BookingsController < ApplicationController
 
 
   def show
+    # @booking = Booking.where(id: @booking)
   end
+
 
   def edit
 
+  end
+
+  def confirm
+    @booking.update(booking_status: "confirmed")
+    redirect_to @booking.user
   end
 
   # def new

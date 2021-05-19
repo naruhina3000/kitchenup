@@ -1,2 +1,14 @@
-<h1>Bookings#show</h1>
-<p>Find me in app/views/bookings/show.html.erb</p>
+<div class="container py-3">
+  <h1><%= @booking.confirmation_code %></h1>
+  <p class="card-text">
+    <%= @booking.booking_status %>
+    <br>
+    <p> Rent kitchen on: <%= @booking.start_date %> - <%= @booking.end_date %>
+  </p>
+
+  <hr>
+  <%#= link_to "Back", user_path, class: "btn btn-warning" %>
+</div>
+
+
+
