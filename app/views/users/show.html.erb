@@ -69,7 +69,7 @@
                 <%= link_to "Pay", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
               <% end %>
               <hr>
-              <%= link_to  "#{booking.completed? ? 'Leave a review' : 'See Booking Details'}", booking_path(booking), class: "btn btn-info" %>
+              <%= link_to  "#{booking.booking_status == "completed" ? 'Leave a review' : 'See Booking Details'}", booking_path(booking), class: "btn btn-info" %>
               <hr>
               <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
             <% end %>
@@ -102,6 +102,8 @@
                 <% elsif (booking.booking_status == "accepted") && Date.today() < (booking.start_date - 1) %>
                   <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
                 <% end %>
+                <%= link_to  "See Booking Details", booking_path(booking), class: "btn btn-info" %>
+
                 <hr>
               </div>
             </div>

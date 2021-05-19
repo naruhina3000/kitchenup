@@ -7,6 +7,7 @@ class BookingsController < ApplicationController
 
 
   def show
+      @review = Review.new
     # @booking = Booking.where(id: @booking)
   end
 
@@ -30,14 +31,6 @@ class BookingsController < ApplicationController
     @booking.update(booking_status: "declined")
     redirect_to current_user
   end
-
-# # ----------------
-#   def complete
-#     if Date.today() > @booking.end_date
-#       @booking.update(booking_status: "completed")
-#     end
-#   end
-# ----------------
 
 
   # def new

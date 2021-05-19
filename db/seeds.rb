@@ -48,7 +48,7 @@ puts "Database clean!"
         )
 
         rand(0..2).times do
-            start_date = Date.today + rand(2..7)
+            start_date = Date.today + rand(-30..7)
             booking = Booking.create(
                 start_date: start_date,
                 end_date: start_date + rand(1..30),
