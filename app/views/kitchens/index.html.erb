@@ -4,6 +4,11 @@
             <div class="col-md-4 py-2">
                 <%= render 'card', kitchen: kitchen  do %>
                   <%= link_to "See more", kitchen, class: "btn btn-info" %>
+                  <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark" do %>
+                  <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
+                  <% end %>
+
+                  <% if current_user %>                  
                   <% if current_user.has_favorite?(kitchen) %>
                             <%= link_to favorite_path(current_user.has_favorite?(kitchen)), method: :delete, class: "bookmark" do %>
                             <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
@@ -13,8 +18,15 @@
                             <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
                             <% end %>
                         <% end %>
+                   <% end %>
                 <% end %>
             </div>
          <% end %>
     </div>
+</div>
+
+<div id="map"
+     style="width: 100%; height: 600px;"
+     data-markers="<%= @markers.to_json %>"
+     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
 </div>

@@ -5,6 +5,7 @@ class Kitchen < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :reviews, through: :bookings
 
+  geocoded_by :address
 
   STATUS = ["listed", "snooze", "unlisted"]
   POLICY = ["flexible", "moderate", "strict"]
@@ -18,6 +19,8 @@ class Kitchen < ApplicationRecord
   validates :cancellation_policy, inclusion: { in: POLICY }
   validates :opening_time, presence: true
   validates :closing_time, presence: true
+
+  after_validation :geocode, if: :will_save_change_to_address?
 
 # @ controller, show kitchen page
 
