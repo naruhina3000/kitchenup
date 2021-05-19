@@ -2,13 +2,9 @@
     <div class="row my-5">
         <% @kitchens.each do |kitchen| %>
             <div class="col-md-4 py-2">
-                <div class="card" style="width: 100%;">
-                    <%# image cloudinary %>
-                    <div class="card-body">
-                        <h5 class="card-title"><%= kitchen.title %></h5>
-                        <p class="card-text" style="height: 50px"><%= kitchen.description.truncate(50) %></p>
-                        <%= link_to "See more", kitchen, class: "btn btn-info" %>
-                        <% if current_user.has_favorite?(kitchen) %>
+                <%= render 'card', kitchen: kitchen  do %>
+                  <%= link_to "See more", kitchen, class: "btn btn-info" %>
+                  <% if current_user.has_favorite?(kitchen) %>
                             <%= link_to favorite_path(current_user.has_favorite?(kitchen)), method: :delete, class: "bookmark" do %>
                             <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
                             <% end %>
@@ -16,9 +12,8 @@
                             <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark" do %>
                             <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
                             <% end %>
-                        <% end %>                        
-                    </div>
-                </div>
+                        <% end %>
+                <% end %>
             </div>
          <% end %>
     </div>
