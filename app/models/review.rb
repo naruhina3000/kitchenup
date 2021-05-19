@@ -7,5 +7,8 @@ class Review < ApplicationRecord
   validates :rating, numericality: { only_integer: true, greater_than: -1, less_than: 6}
   validates :content, length: { minimum: 20 }
   validates :reply, length: { minimum: 20 }, on: :update
+
+
+
 end
 

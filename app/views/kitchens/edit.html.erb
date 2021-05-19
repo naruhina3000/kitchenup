@@ -13,7 +13,12 @@
             <%= f.input :price %><p>$ / Day</p>
             <%= f.input :cancellation_policy, collection: Kitchen::POLICY %>
             <%= f.input :listing_status, collection: Kitchen::STATUS %>
-            <%= f.input :amenities, as: :check_boxes, collection: @all_amenities, input_html: { multiple: true } %>
+            <div>
+              <% @all_amenities.each do |amenity| %>
+                <label for="<%= amenity.name %>"><%= amenity.name %></label>
+                <input type="checkbox" value="<%= amenity.id %>" id="<%= amenity.name %>" name="kitchen[amenities][]" <%= 'checked' if @used_amenities.include?(amenity) %>>
+              <% end %>
+            </div>
             <%#= f.input :amenities, as: :check_boxes, collection: @used_amenities, input_html: { multiple: true } %>
             <%#= f.input :amenities, as: :check_boxes, collection: @free_amenities, input_html: { multiple: true } %>
             <%= f.submit "Update Kitchen", class:"btn btn-primary", method: :patch %>

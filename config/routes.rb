@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       patch :accept
       patch :confirm
       patch :cancel
-      patch :complete
     end
   end
   get "/search", to: "kitchens#search", as: :search_kitchen

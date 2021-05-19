@@ -15,6 +15,15 @@ class Booking < ApplicationRecord
 
   validate :end_date_after_start_date
 
+  def completed?
+    if Date.today() > self.end_date
+      self.update(booking_status: "completed")
+      true
+    else
+      false
+    end
+  end
+
   private
 
   def end_date_after_start_date

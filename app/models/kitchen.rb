@@ -6,7 +6,7 @@ class Kitchen < ApplicationRecord
   has_many :reviews, through: :bookings
 
 
-  STATUS = ["listed", "snooze", "unlisted", "deactivate"]
+  STATUS = ["listed", "snooze", "unlisted"]
   POLICY = ["flexible", "moderate", "strict"]
 
   validates :title, presence: true, uniqueness: true

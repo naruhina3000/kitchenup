@@ -31,7 +31,7 @@ class BookingsController < ApplicationController
     redirect_to current_user
   end
 
-# ----------------
+# # ----------------
 #   def complete
 #     if Date.today() > @booking.end_date
 #       @booking.update(booking_status: "completed")

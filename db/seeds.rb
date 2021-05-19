@@ -38,15 +38,15 @@ puts "Database clean!"
             title: Faker::Space.planet + rand(1..10000).to_s,
             description: Faker::Quote.yoda,
             size: rand(30..300),
-            listing_status: ["listed", "snooze", "unlisted", "deactivate"].sample,
+            listing_status: ["listed", "snooze", "unlisted"].sample,
             address: Faker::Address.full_address,
-            price: rand(30..300), 
+            price: rand(30..300),
             cancellation_policy: ["flexible", "moderate", "strict"].sample,
             opening_time: rand(5..12),
             closing_time: rand(13..21),
             user: user
         )
-    
+
         rand(0..2).times do
             start_date = Date.today + rand(2..7)
             booking = Booking.create(
@@ -64,7 +64,7 @@ puts "Database clean!"
                     booking: booking,
                     user: booking.user,
                     reply: [true, false].sample ? Faker::Fantasy::Tolkien.poem : nil
-                )  
+                )
             end
         end
     end

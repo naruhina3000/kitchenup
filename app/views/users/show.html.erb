@@ -43,7 +43,6 @@
         </div>
   </div>
   </div>
-</div>
 
 
 
@@ -70,7 +69,7 @@
                 <%= link_to "Pay", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
               <% end %>
               <hr>
-              <%= link_to "See Booking Details", booking_path(booking), class: "btn btn-info" %>
+              <%= link_to  "#{booking.completed? ? 'Leave a review' : 'See Booking Details'}", booking_path(booking), class: "btn btn-info" %>
               <hr>
               <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
             <% end %>
@@ -127,6 +126,7 @@
                 <%= kitchen.address %> | <%= kitchen.size %>
                 <br>
                 <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
+                <%#= link_to "Delete Kitchen", destroy_kitchen_path(kitchen), class: "btn btn-info" %>
                 <hr>
               </div>
             </div>
