@@ -2,7 +2,6 @@
     <div class="row my-5">
         <% @kitchens.each do |kitchen| %>
             <div class="col-md-4 py-2">
-<<<<<<< HEAD
                 <%= render 'card', kitchen: kitchen  do %>
                   <%= link_to "See more", kitchen, class: "btn btn-info" %>
                   <% if current_user.has_favorite?(kitchen) %>
@@ -15,8 +14,6 @@
                             <% end %>
                         <% end %>
                 <% end %>
-=======
->>>>>>> master
             </div>
          <% end %>
     </div>
