@@ -8,5 +8,6 @@ class UsersController < ApplicationController
       @bookings_requested = Booking.where(user: @user)
       @bookings_received = Booking.joins(:kitchen).where(kitchens: {user: @user})
       @my_kitchens = Kitchen.where(user: @user)
+      @my_favorites = Favorite.where(user: @user)
     end
 end
