@@ -7,6 +7,41 @@
   </p>
 
   <hr>
+
+  <% if @booking.review&.id  %>
+    <p class="card-text">
+      <h4>Review</h4>
+      <br>
+        <p><strong>Rating: </strong>
+          <% (@booking.review.rating).times do %>
+            <i class="fas fa-star"></i>
+          <% end %>
+          <% (5 - @booking.review.rating).times do %>
+            <i class="far fa-star"></i>
+          <% end %>
+        </p>
+        <p><strong>Review: </strong><%= @booking.review.content %> </p>
+        <hr>
+        <% if @booking.review.reply %>
+          <p><strong>Reply from Owner: </strong><%= @booking.review.reply %> </p>
+        <% end %>
+    </p>
+  <% end %>
+
+  <% if (@booking.booking_status == "completed") && !@booking.review&.id %>
+      <h4>Leave a review</h4>
+      <%= simple_form_for [ @booking, @review ] do |f| %>
+        <%= f.input :rating, collection: Review::RATING %>
+        <%= f.input :content %>
+        <%= f.submit "Review" %>
+      <% end %>
+  <% elsif @booking.review&.id && current_user == @booking.kitchen.user && !@booking.review.reply %>
+      <%= simple_form_for @booking.review do |f| %>
+        <%= f.input :reply %>
+        <%= f.submit "Reply" %>
+      <% end %>
+
+  <% end %>
   <%#= link_to "Back", user_path, class: "btn btn-warning" %>
 </div>
 

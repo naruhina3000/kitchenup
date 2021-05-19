@@ -10,13 +10,14 @@ Rails.application.routes.draw do
   resources :favorites, only: [:destroy]
 
   resources :bookings, only: [:index, :show, :new, :edit] do
-    resources :reviews, only: [:create, :update]
+    resources :reviews, only: [:create]
     member do
       patch :accept
       patch :confirm
       patch :cancel
     end
   end
+  resources :reviews, only: [:update]
   get "/search", to: "kitchens#search", as: :search_kitchen
   post "/bookings/:id", to: "bookings#clean", as: :clean_kitchen
   get "/bookings/:id", to: "bookings#status", as: :booking_status

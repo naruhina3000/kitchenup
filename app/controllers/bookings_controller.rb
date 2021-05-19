@@ -7,6 +7,7 @@ class BookingsController < ApplicationController
 
 
   def show
+      @review = Review.new
     # @booking = Booking.where(id: @booking)
   end
 

@@ -21,6 +21,27 @@
       <%# end %>
     </div>
   <hr>
+
+  <p class="card-text">
+    <h4>Reviews</h4>
+    <br>
+    <% @kitchen.reviews.each do |review| %>
+      <p><strong>Rating: </strong>
+        <% (review.rating).times do %>
+          <i class="fas fa-star"></i>
+        <% end %>
+        <% (5 - review.rating).times do %>
+          <i class="far fa-star"></i>
+        <% end %>
+      </p>
+      <p><strong>Review: </strong><%= review.content %> </p>
+      <hr>
+      <% if review.reply %>
+        <p><strong>Reply from Owner: </strong><%= review.reply %> </p>
+      <% end %>
+      <hr>
+    <% end %>
+  </p>
   <%#= link_to "Back", user_path, class: "btn btn-warning" %>
 </div>
 
