@@ -1,2 +1,28 @@
-<h1>Kitchen#edit</h1>
-<p>Find me in app/views/kitchen/edit.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto my-5">
+      <div class="card p-4">
+        <h1>Update your kitchen</h1>
+          <%= simple_form_for @kitchen do |f| %>
+            <%= f.input :title %>
+            <%= f.input :description %>
+            <%= f.input :address %>
+            <%= f.input :size %><p> m2 </p>
+            <%= f.input :opening_time %>
+            <%= f.input :closing_time %>
+            <%= f.input :price %><p>$ / Day</p>
+            <%= f.input :cancellation_policy, collection: Kitchen::POLICY %>
+            <%= f.input :listing_status, collection: Kitchen::STATUS %>
+            <%= f.input :amenities, as: :check_boxes, collection: @all_amenities, input_html: { multiple: true } %>
+            <%#= f.input :amenities, as: :check_boxes, collection: @used_amenities, input_html: { multiple: true } %>
+            <%#= f.input :amenities, as: :check_boxes, collection: @free_amenities, input_html: { multiple: true } %>
+            <%= f.submit "Update Kitchen", class:"btn btn-primary", method: :patch %>
+          <% end %>
+      </div>
+          <%#= f.association :tag, label: "Add a tag", input_html: { multiple: true } %>
+          <!-- if you want to change the input, input_html. if want to change the wrapper, wrapper_html -->
+      <hr>
+      <%= link_to "Back", kitchens_path, class: "btn btn-warning" %>
+    </div>
+  </div>
+</div>

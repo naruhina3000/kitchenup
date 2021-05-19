@@ -59,6 +59,8 @@ class KitchensController < ApplicationController
     @kitchen_amenity = KitchenAmenity.new
     @used_amenity_id = @kitchen.amenities.pluck(:id)
     @free_amenities = Amenity.where.not(id: @used_amenity_id)
+    @used_amenities = Amenity.where(id: @used_amenity_id)
+    @all_amenities = Amenity.all
   end
 
   def set_kitchen
