@@ -12,4 +12,9 @@ class User < ApplicationRecord
 
   validates :user_name, presence: true, uniqueness: true
   validates :first_name, presence: true
+
+  def has_favorite?(kitchen)
+    # self.favorites.pluck(:kitchen_id).include? kitchen.id
+    Favorite.find_by(user: self, kitchen: kitchen)
+  end
 end
