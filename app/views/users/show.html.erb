@@ -64,7 +64,7 @@
                 <br>
 
               <% if (booking.booking_status == "pending") && Date.today() < (booking.start_date - 1) %>
-                <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
+                <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
               <% elsif booking.booking_status == "accepted" %>
                 <%= link_to "Pay", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
               <% end %>
@@ -83,32 +83,27 @@
   <div class="container py-5">
     <h1>Bookings Received</h1>
     <div class="row">
+    
       <% @bookings_received.each do |booking| %>
         <div class="col-md-4 my-4">
-          <div class="card" style="width: 100%;">
-            <div class="card-body">
-              <h5 class="card-title"><%= booking.kitchen.title %></h5>
-              <p class="card-text">
-                <%= booking.user.first_name.capitalize %>
-                <br>
-                <%= booking.kitchen.address %> | <%= booking.booking_status %>
-                <br>
-                <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
-                <br>
-
-                <% if booking.booking_status == "pending"  %>
+        <%= render 'kitchens/card', kitchen: booking.kitchen do %>
+            <%= booking.user.first_name.capitalize %>
+            <br>
+            <%= booking.kitchen.address %> | <%= booking.booking_status %>
+            <br>
+            <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
+            <br>
+              <% if booking.booking_status == "pending"  %>
                   <%= link_to "Accept", accept_booking_path(booking), class: "btn btn-info", method: :patch %>
                   <%= link_to "Decline", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
-                <% elsif (booking.booking_status == "accepted") && Date.today() < (booking.start_date - 1) %>
-                  <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
-                <% end %>
-                <%= link_to  "See Booking Details", booking_path(booking), class: "btn btn-info" %>
-
-                <hr>
-              </div>
-            </div>
-          </div>
+              <% elsif (booking.booking_status == "accepted") && Date.today() < (booking.start_date - 1) %>
+                  <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
+              <% end %>
+            <%= link_to  "See Booking Details", booking_path(booking), class: "btn btn-info" %>
+            <hr>
         <% end %>
+      </div>
+      <% end %>
       </div>
   </div>
   </div>
@@ -119,29 +114,22 @@
     <div class="row">
       <% @my_kitchens.each do |kitchen| %>
         <div class="col-md-4 my-4">
-          <div class="card" style="width: 100%;">
-            <div class="card-body">
-              <h5 class="card-title"><%= kitchen.title %></h5>
-              <p class="card-text">
-                <%= kitchen.description %>
+
+          <%= render 'kitchens/card', kitchen: kitchen do %>
+                Address: <%= kitchen.address %>
                 <br>
-                <%= kitchen.address %> | <%= kitchen.size %>
+                Size: <%= kitchen.size %> m²
                 <br>
                 <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
-                <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-info", method: :delete %>
-                <hr>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
+                <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-danger", method: :delete %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
   </div>
 
-
-
-
-
+  
 </div>
 
 <% end %>
