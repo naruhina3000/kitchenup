@@ -21,7 +21,7 @@
             </div>
             <%#= f.input :amenities, as: :check_boxes, collection: @used_amenities, input_html: { multiple: true } %>
             <%#= f.input :amenities, as: :check_boxes, collection: @free_amenities, input_html: { multiple: true } %>
-            <div> 
+            <div>
               <% if @kitchen.photos.any? %>
                 <% @kitchen.photos.each do |photo| %>
                 <%= cl_image_tag photo.key, class: "img-thumbnail" %>
@@ -32,7 +32,7 @@
               <div class="file-upload">
                 <div class="file-select">
                   <div class="file-select-button" id="fileName">Choose File</div>
-                  <div class="file-select-name" id="noFile">No file chosen...</div> 
+                  <div class="file-select-name" id="noFile">No file chosen...</div>
                   <%= f.input :photos, as: :file, input_html: {multiple: true, class:"clickable-photo-input"} %>
                 </div>
               </div>
@@ -43,7 +43,7 @@
           <%#= f.association :tag, label: "Add a tag", input_html: { multiple: true } %>
           <!-- if you want to change the input, input_html. if want to change the wrapper, wrapper_html -->
       <hr>
-      <%= link_to "Back", kitchens_path, class: "btn btn-warning" %>
+      <%= link_to "Back", @kitchen, class: "btn btn-warning" %>
     </div>
   </div>
 </div>

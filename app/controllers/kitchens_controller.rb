@@ -44,6 +44,12 @@ class KitchensController < ApplicationController
 
   def show
     @booking = Booking.new
+    @user = current_user
+    @markers =
+      {
+        lat: @kitchen.latitude,
+        lng: @kitchen.longitude
+      }
   end
 
   def edit
