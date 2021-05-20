@@ -46,7 +46,7 @@
                     </div>
                   </div>
 
-                   <%= submit_tag "Search", class: "btn btn-primary search-btn" %>
+                  <%= submit_tag "Search", class: "btn btn-primary search-btn" %>
 
                 </div>
 
@@ -59,12 +59,20 @@
 <!--       end of the form -->
     <div class="row my-5">
       <% @kitchens.each do |kitchen| %>
-        <div class="col-md-4 py-2">
+        <div class="col-md-6 py-2">
+          <div class="card m-0">
           <%= render 'card', kitchen: kitchen  do %>
-              <span>Size:  <%= kitchen.size %></span>
-              <span>Price: <%= kitchen.price %></span>
-              <p>LIsting Status: <%= kitchen.listing_status %></p>
-              <%= link_to "See more", kitchen, class: "btn btn-info" %>
+            <div class="my-8">
+              <span class="text-muted"><strong>Size:</strong>  <%= kitchen.size %> m2 </span>
+              <span> | </span>
+              <span class="text-muted"><strong>Price:</strong> $<%= kitchen.price %>/day </span>
+            </div>
+            <div class="short-line"></div>
+            <div style="height: 140px">
+              <% kitchen.amenities.each do |amenity| %>
+                <span class="text-muted" ><%= amenity.name %> • </span>
+              <% end %>
+            </div>
               <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark" do %>
               <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
             <% end %>
@@ -80,6 +88,8 @@
               <% end %>
             <% end %>
           <% end %>
+          <%= link_to "view kitchen", kitchen, class: "btn btn-info w-75 mb-3 mx-auto"%>
+          </div>
         </div>
       <% end %>
     </div>

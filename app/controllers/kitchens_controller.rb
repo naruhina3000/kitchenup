@@ -11,8 +11,8 @@ class KitchensController < ApplicationController
     @minprice = Kitchen.all.order(:price).first.price
     @maxprice = Kitchen.all.order(:price).last.price
 
-    @kitchens = Kitchen.geocoded.where(listing_status: "listed")
-
+    @kitchens = Kitchen.where(listing_status: "listed")
+    # @kitchens = Kitchen.geocoded.where(listing_status: "listed")
 
     if params[:query].present?
       sql_query = "title ILIKE :query OR address ILIKE :query"
