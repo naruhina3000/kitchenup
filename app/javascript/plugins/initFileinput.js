@@ -1,8 +1,8 @@
 import $ from "jquery";
 
 const initFileinput = () => {
-  $("#chooseFile").bind("change", function () {
-    var filename = $("#chooseFile").val();
+  $(".clickable-photo-input").bind("change", function () {
+    var filename = $(".clickable-photo-input").val();
     if (/^\s*$/.test(filename)) {
       $(".file-upload").removeClass("active");
       $("#noFile").text("No file chosen...");

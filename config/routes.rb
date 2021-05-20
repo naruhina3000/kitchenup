@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   post "/bookings/:id", to: "bookings#clean", as: :clean_kitchen
   get "/bookings/:id", to: "bookings#status", as: :booking_status
   get "/users/:id", to: "users#show", as: :user
+  get "/users/:id/edit", to: "users#edit", as: :user_edit
+  patch "/users/:id", to: "users#update"
 
 end
