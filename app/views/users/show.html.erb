@@ -1,14 +1,28 @@
-<div class="container">
-  <div class="row">
-    <%= @user.first_name.capitalize %>
-  </div>
+
+<div class="container pt-3">
+<div class="card-product">
+  <% if @user.photo.attached? %>
+  <%= cl_image_tag @user.photo.key %>
+  <% else %>
+  <%= image_tag "user.png", class: "avatar-large" %>
+  <% end %>
+  <div class="card-product-infos">
+    <h2><%= @user.first_name.capitalize %></h2>
+    <p>Email <%= @user.email %></p>
+    <p>Phone: <%= @user.phone_number %></p>
+    <p>Kitchens listed: <%= @user.kitchen_ids.count %></p>
+     <% if current_user == @user %>
+     <p>Current Bookings: <%= @user.bookings.count %></p>
+    </div>
+     <div class="card-product-infos">
+     <%= link_to "Edit Profile",  user_edit_path(current_user), class: "btn btn-info" %>
+     </div>
+     <% end %>
+</div>
 </div>
 
 
-
  <% if current_user == @user %>
-
- <%= link_to "Edit Profile",  user_edit_path(current_user), class: "btn btn-info" %>
 
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
