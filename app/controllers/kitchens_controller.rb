@@ -3,9 +3,36 @@ class KitchensController < ApplicationController
   before_action :set_kitchen, only: [:show, :edit, :update, :destroy]
 
   def index
-    @kitchens = Kitchen.all
+    # @kitchens = Kitchen.all
+    # @kitchens = @kitchens.near(params[:address], 30) if params[:address].present?
+    # @kitchens = @kitchens.where(params[:query]) if params[:query].present?
+    @minsize = Kitchen.all.order(:size).first.size
+    @maxsize = Kitchen.all.order(:size).last.size
+    @minprice = Kitchen.all.order(:price).first.price
+    @maxprice = Kitchen.all.order(:price).last.price
 
-    @markers = @kitchens.geocoded.map do |kitchen|
+    @kitchens = Kitchen.geocoded.where(listing_status: "listed")
+
+
+    if params[:query].present?
+      sql_query = "title ILIKE :query OR address ILIKE :query"
+      @kitchens = Kitchen.where(sql_query, query: "%#{params[:query]}%")
+    end
+
+    @kitchens = @kitchens.where('size >= ?', params[:minsize]) if params[:minsize].present?
+    @kitchens = @kitchens.where('size <= ?', params[:maxsize]) if params[:maxsize].present?
+
+    @kitchens = @kitchens.where('price >= ?', params[:minprice]) if params[:minprice].present?
+    @kitchens = @kitchens.where('price <= ?', params[:maxprice]) if params[:maxprice].present?
+
+     # @kitchens = @kitchens.joins(:amenities).where(amenities: {id: params[:amenities]}) if params[:amenities].present?
+    if params[:amenities].present?
+     @kitchens = @kitchens.select do |kitchen|
+                  (params[:amenities].map(&:to_i) - kitchen.amenities.pluck(:id)).empty?
+                end
+    end
+
+    @markers = @kitchens.map do |kitchen|
       {
         lat: kitchen.latitude,
         lng: kitchen.longitude,
