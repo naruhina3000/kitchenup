@@ -1,92 +1,99 @@
 
-
-
-<div class="container py-5">
-
-
-    <%= form_tag kitchens_path, method: :get do %>
-      <div class="search-form-control form-group mx-auto">
-        <%= text_field_tag :query,
-          params[:query],
-          class: "form-control",
-          placeholder: "Find a kitchen"
-        %>
-      </div>
-
-      <div class="search-form-control form-group mx-auto">
-        <label for="minsize">From </label>
-        <input id="minsize" name="minsize" min="<%= @minsize %>" max="<%= @maxsize %>" step="1" type="number" placeholder="Min" value="<%= params[:minsize] %>">
-      </div>
-
-
-      <div class="search-form-control form-group mx-auto">
-        <label for="maxsize"> to </label>
-        <input id="maxsize" name="maxsize" min="<%= @minsize %>" max=" <%= @maxsize %>" step="1" type="number" placeholder="Max" value="<%= params[:maxsize] %>">
-      </div>
-
-
-      <div class="search-form-control form-group mx-auto">
-        <label for="minprice">From </label>
-        <input id="minprice" name="minprice" min="<%= @minprice %>" max="<%= @maxprice %>" step="1" type="number" placeholder="Min" value="<%= params[:minprice] %>">
-      </div>
-
-      <div class="search-form-control form-group mx-auto">
-        <label for="maxprice">to </label>
-        <input id="maxprice" name="maxprice" min="<%= @minprice %>" max="<%= @maxprice %>" step="1" type="number" placeholder="Max" value="<%= params[:maxprice] %>">
-      </div>
-
-
-
-
-
-
-
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-7">
       <div>
-        <p>Amenities:</p>
-        <% Amenity.all.each do |amenity| %>
-          <label for="<%= amenity.name %>"><%= amenity.name %></label>
-          <input type="checkbox" value="<%= amenity.id %>" id="<%= amenity.name %>" name="amenities[]" <%= 'checked' if (params[:amenities] || []).map(&:to_i).include?(amenity.id) %>>
+        <%= form_tag kitchens_path, method: :get do %>
+          <div class="search-form-control form-group my-4">
+            <%= text_field_tag :query,
+              params[:query],
+              class: "form-control",
+              placeholder: "Find a kitchen"
+            %>
+          </div>
+            <div class="container search">
+              <div class="row justify-content-between">
+
+                <div class="col-md-7 mx-0 pr-2 border-right">
+                    <p><strong>Amenities:</strong></p>
+                    <% Amenity.all.each do |amenity| %>
+                      <label for="<%= amenity.name %>"><%= amenity.name %></label>
+                      <input type="checkbox" value="<%= amenity.id %>" id="<%= amenity.name %>" name="amenities[]" <%= 'checked' if (params[:amenities] || []).map(&:to_i).include?(amenity.id) %>>
+                    <% end %>
+                </div>
+
+                <div class="col-md-5 flex-grow-1">
+
+                  <div class="wrapper">
+                    <div class="search-form-control form-group m-0">
+                      <label for="minsize"><strong>Size:</strong></label>
+                      <input id="minsize" name="minsize" min="<%= @minsize %>" max="<%= @maxsize %>" step="1" type="number" placeholder="Min" value="<%= params[:minsize] %>" style="width: 80px">
+                    </div>
+                    <div class="search-form-control form-group ml-2">
+                      <label for="maxsize"> to </label>
+                      <input id="maxsize" name="maxsize" min="<%= @minsize %>" max=" <%= @maxsize %>" step="1" type="number" placeholder="Max" value="<%= params[:maxsize] %> " style="width: 80px">
+                    </div>
+                  </div>
+
+                  <div class="wrapper">
+                    <div class="search-form-control form-group m-0">
+                      <label for="minprice"><strong>Price:</strong></label>
+                      <input id="minprice" name="minprice" min="<%= @minprice %>" max="<%= @maxprice %>" step="1" type="number" placeholder="Min" value="<%= params[:minprice] %>" style="width: 80px">
+                    </div>
+                    <div class="search-form-control form-group ml-2">
+                      <label for="maxprice">to </label>
+                      <input id="maxprice" name="maxprice" min="<%= @minprice %>" max="<%= @maxprice %>" step="1" type="number" placeholder="Max" value="<%= params[:maxprice] %>" style="width: 80px">
+                    </div>
+                  </div>
+
+                   <%= submit_tag "Search", class: "btn btn-primary search-btn" %>
+
+                </div>
+
+              </div>
+
+            </div>
+
         <% end %>
-      </div>
-
-
-
-
-
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-    <% end %>
-
-
-  <div class="row my-5">
-    <% @kitchens.each do |kitchen| %>
-      <div class="col-md-4 py-2">
-        <%= render 'card', kitchen: kitchen  do %>
-            <p>Size: <%= kitchen.size %></p>
-            <p>Price: <%= kitchen.price %></p>
-            <p>LIsting Status: <%= kitchen.listing_status %></p>
-            <%= link_to "See more", kitchen, class: "btn btn-info" %>
-            <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark" do %>
-            <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
-          <% end %>
-          <% if current_user %>
-            <% if current_user.has_favorite?(kitchen) %>
-              <%= link_to favorite_path(current_user.has_favorite?(kitchen)), method: :delete, class: "bookmark" do %>
-                <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
-              <% end %>
-            <% else %>
+    </div>
+<!--       end of the form -->
+    <div class="row my-5">
+      <% @kitchens.each do |kitchen| %>
+        <div class="col-md-4 py-2">
+          <%= render 'card', kitchen: kitchen  do %>
+              <span>Size:  <%= kitchen.size %></span>
+              <span>Price: <%= kitchen.price %></span>
+              <p>LIsting Status: <%= kitchen.listing_status %></p>
+              <%= link_to "See more", kitchen, class: "btn btn-info" %>
               <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark" do %>
-                <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
+              <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
+            <% end %>
+            <% if current_user %>
+              <% if current_user.has_favorite?(kitchen) %>
+                <%= link_to favorite_path(current_user.has_favorite?(kitchen)), method: :delete, class: "bookmark" do %>
+                  <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
+                <% end %>
+              <% else %>
+                <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark" do %>
+                  <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
-        <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+  <div class="col-md-5">
+    <div id="map"
+         style="width: 100%; height: calc(100vh - 66px);"
+         data-markers="<%= @markers.to_json %>"
+         data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+    </div>
+
+   </div>
   </div>
 </div>
 
-<div id="map"
-     style="width: 100%; height: 600px;"
-     data-markers="<%= @markers.to_json %>"
-     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
-</div>
+

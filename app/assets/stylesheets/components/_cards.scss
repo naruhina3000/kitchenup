@@ -14,6 +14,14 @@
   object-fit: cover;
 }
 
+.wrapper {
+  display: flex;
+}
+
+.search {
+  position: relative;
+}
+
 .card-product {
   overflow: hidden;
   height: 200px;
