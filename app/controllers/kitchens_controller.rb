@@ -52,7 +52,7 @@ class KitchensController < ApplicationController
 
   def destroy
     @kitchen.destroy
-    redirect_to kitchens_path
+    redirect_to user_path(current_user)
   end
 
   def search
