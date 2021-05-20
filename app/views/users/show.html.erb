@@ -128,7 +128,7 @@
                 <%= kitchen.address %> | <%= kitchen.size %>
                 <br>
                 <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
-                <%#= link_to "Delete Kitchen", destroy_kitchen_path(kitchen), class: "btn btn-info" %>
+                <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-info", method: :delete %>
                 <hr>
               </div>
             </div>
