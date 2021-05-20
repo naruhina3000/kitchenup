@@ -8,8 +8,8 @@
     <% end %>
   <div class="card-body">
     <h5 class="card-title"><%= kitchen.title %></h5>
-    <p class="card-text"><%= kitchen.description.truncate(50) %></p>
-    <p class="card-text">
+    <!-- <p class="card-text"><%= kitchen.description.truncate(50) %></p> -->
+    <p class="card-text"><%= kitchen.address %></p>
     <%= yield %>
   </div>
 </div>
