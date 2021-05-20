@@ -51,6 +51,7 @@ class KitchensController < ApplicationController
   end
 
   def destroy
+    @user.photos.purge
     @kitchen.destroy
     redirect_to user_path(current_user)
   end

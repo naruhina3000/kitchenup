@@ -64,7 +64,7 @@
                 <br>
 
               <% if (booking.booking_status == "pending") && Date.today() < (booking.start_date - 1) %>
-                <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
+                <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
               <% elsif booking.booking_status == "accepted" %>
                 <%= link_to "Pay", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
               <% end %>
@@ -97,7 +97,7 @@
                   <%= link_to "Accept", accept_booking_path(booking), class: "btn btn-info", method: :patch %>
                   <%= link_to "Decline", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
               <% elsif (booking.booking_status == "accepted") && Date.today() < (booking.start_date - 1) %>
-                  <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
+                  <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
               <% end %>
             <%= link_to  "See Booking Details", booking_path(booking), class: "btn btn-info" %>
             <hr>
@@ -116,13 +116,12 @@
         <div class="col-md-4 my-4">
 
           <%= render 'kitchens/card', kitchen: kitchen do %>
-               <%= kitchen.description %>
+                Address: <%= kitchen.address %>
                 <br>
-                <%= kitchen.address %> | <%= kitchen.size %>
+                Size: <%= kitchen.size %> m²
                 <br>
                 <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
-                <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-info", method: :delete %>
-                <hr>
+                <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-danger", method: :delete %>
           <% end %>
         </div>
       <% end %>

@@ -6,7 +6,7 @@
           <%= simple_form_for @kitchen do |f| %>
             <%= f.input :title %>
             <%= f.input :description %>
-            <%= f.input :address %>
+            <%= f.input :address, as: :string %>
             <%= f.input :size %><p> m2 </p>
             <%= f.input :opening_time %>
             <%= f.input :closing_time %>
@@ -21,7 +21,22 @@
             </div>
             <%#= f.input :amenities, as: :check_boxes, collection: @used_amenities, input_html: { multiple: true } %>
             <%#= f.input :amenities, as: :check_boxes, collection: @free_amenities, input_html: { multiple: true } %>
-            <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+            <div> 
+              <% if @kitchen.photos.any? %>
+                <% @kitchen.photos.each do |photo| %>
+                <%= cl_image_tag photo.key, class: "img-thumbnail" %>
+                <% end %>
+              <% end %>
+            </div>
+            <div id="kitchen-file-uploader" class="my-2">
+              <div class="file-upload">
+                <div class="file-select">
+                  <div class="file-select-button" id="fileName">Choose File</div>
+                  <div class="file-select-name" id="noFile">No file chosen...</div> 
+                  <input type="file" name="kitchen[photos][]" id="chooseFile" multiple>
+                </div>
+              </div>
+            </div>
             <%= f.submit "Update Kitchen", class:"btn btn-primary", method: :patch %>
           <% end %>
       </div>
