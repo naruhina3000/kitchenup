@@ -21,7 +21,7 @@
                 <div class="file-select">
                   <div class="file-select-button" id="fileName">Choose File</div>
                   <div class="file-select-name" id="noFile">No file chosen...</div> 
-                  <input type="file" name="kitchen[photos][]" id="chooseFile" multiple>
+                  <%= f.input :photos, as: :file, input_html: {multiple: true, class:"clickable-photo-input"} %>
                 </div>
               </div>
             </div>
