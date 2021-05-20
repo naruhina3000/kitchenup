@@ -1,5 +1,6 @@
 class Kitchen < ApplicationRecord
   belongs_to :user
+  has_many_attached :photos
   has_many :kitchen_amenities, dependent: :destroy
   has_many :amenities, through: :kitchen_amenities
   has_many :bookings, dependent: :destroy

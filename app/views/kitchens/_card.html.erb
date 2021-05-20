@@ -1,12 +1,14 @@
 <div class="card" style="width: 100%;">
-  <div class="card-body">
     <% if kitchen.photos.attached? %>
-    <%= cl_image_tag kitchen.photo.key %>
+      <% kitchen.photos.each do |photo| %>
+      <%= cl_image_tag photo.key, class: "card-img-top" %>
+      <% end %>
     <% else %>
-    <%= image_tag "kitchen_placeholder.jpg"%>
+    <%= image_tag "kitchen_placeholder.jpg", class: "card-img-top" %>
     <% end %>
+  <div class="card-body">
     <h5 class="card-title"><%= kitchen.title %></h5>
-    <p class="card-text" style="height: 50px"><%= kitchen.description.truncate(50) %></p>
+    <p class="card-text"><%= kitchen.description.truncate(50) %></p>
     <p class="card-text">
     <%= yield %>
   </div>
