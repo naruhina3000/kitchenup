@@ -21,6 +21,7 @@
             </div>
             <%#= f.input :amenities, as: :check_boxes, collection: @used_amenities, input_html: { multiple: true } %>
             <%#= f.input :amenities, as: :check_boxes, collection: @free_amenities, input_html: { multiple: true } %>
+            <%= f.input :photos, as: :file, input_html: { multiple: true } %>
             <%= f.submit "Update Kitchen", class:"btn btn-primary", method: :patch %>
           <% end %>
       </div>

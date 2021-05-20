@@ -10,4 +10,10 @@ class UsersController < ApplicationController
       @my_kitchens = Kitchen.where(user: @user)
       @my_favorites = Favorite.where(user: @user)
     end
+
+    private
+
+    def user_params
+      params.require(:user).permit( ,:photo)
+    end
 end

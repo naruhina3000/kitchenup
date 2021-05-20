@@ -80,6 +80,6 @@ class KitchensController < ApplicationController
 
   def kitchen_params
     params.require(:kitchen).permit(:title, :description, :size, :listing_status,
-    :address, :price, :cancellation_policy, :opening_time, :closing_time, :photos)
+    :address, :price, :cancellation_policy, :opening_time, :closing_time, photos: [])
   end
 end
