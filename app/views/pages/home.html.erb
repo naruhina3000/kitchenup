@@ -1,13 +1,15 @@
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.3)), url(<%= image_path 'banner.jpg' %>);">
   <div class="container mt-5">
-    <form novalidate="novalidate" class="simple_form search" action="/" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-      <div class="search-form-control form-group mx-auto" style="width: 75%">
-        <input class="form-control string required" style="opacity:0.7" type="text" name="search[query]" id="search_query" />
-        <button name="button" type="submit" class="btn btn-flat">
-          <i class="fas fa-search"></i> Search
-        </button>
-      </div>
-    </form>
+      <%= form_tag kitchens_path, method: :get do %>
+        <div class="search-form-control form-group mx-auto" style="width: 75%">
+            <%= text_field_tag :query,
+              params[:query],
+              class: "form-control",
+              placeholder: "Find a kitchen"
+            %>
+            <%= submit_tag "Search", class: "btn btn-primary" %>
+        </div>
+      <% end %>
     <br>
     <br>
     <br>
@@ -18,4 +20,6 @@
     </div>
   </div>
 </div>
+
+
 
