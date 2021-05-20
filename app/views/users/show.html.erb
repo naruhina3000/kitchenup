@@ -8,6 +8,8 @@
 
  <% if current_user == @user %>
 
+ <%= link_to "Edit Profile",  user_edit_path(current_user), class: "btn btn-info" %>
+
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-favorites-tab" data-toggle="tab" href="#nav-favorites" role="tab" aria-controls="nav-favorites aria-selected="true">Favorites</a>

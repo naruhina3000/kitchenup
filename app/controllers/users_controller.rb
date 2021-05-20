@@ -11,6 +11,12 @@ class UsersController < ApplicationController
       @my_favorites = Favorite.where(user: @user)
     end
 
+    def edit
+    end
+
+    def update
+    end
+
     private
 
     def user_params
