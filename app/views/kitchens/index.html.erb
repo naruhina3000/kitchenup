@@ -73,16 +73,16 @@
                 <span class="text-muted" ><%= amenity.name %> • </span>
               <% end %>
             </div>
-              <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark", remote: true do %>
+              <%= link_to kitchen_favorites_path(kitchen) , method: :post, class:"bookmark" do %>
               <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
             <% end %>
             <% if current_user %>
               <% if current_user.has_favorite?(kitchen) %>
-                <%= link_to favorite_path(current_user.has_favorite?(kitchen)), method: :delete, class: "bookmark", remote: true do %>
+                <%= link_to favorite_path(current_user.has_favorite?(kitchen)), method: :delete, class:"bookmark", remote: true do %>
                   <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
                 <% end %>
               <% else %>
-                <%= link_to kitchen_favorites_path(kitchen) , method: :post, class: "bookmark", remote: true do %>
+                <%= link_to kitchen_favorites_path(kitchen) , method: :post, class:"bookmark", remote: true do %>
                   <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
                 <% end %>
               <% end %>
