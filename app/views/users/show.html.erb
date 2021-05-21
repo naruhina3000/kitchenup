@@ -81,9 +81,7 @@
     </div>
 
     <div class="tab-pane fade" id="nav-bookings" role="tabpanel" aria-labelledby="nav-bookings-tab">
-      <div class="container-fluid py-5">
-        <%= link_to "Rent a kitchen", kitchens_path, class: "btn btn-primary my-4" %>
-
+      <div class="container-fluid">
 
         <div class="row">
           <% @bookings_requested.each do |booking| %>
