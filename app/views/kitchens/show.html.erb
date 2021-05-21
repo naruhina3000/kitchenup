@@ -1,49 +1,136 @@
 
 
-<div class="container py-3">
-  <h1><%= @kitchen.title %></h1>
-  <p class="card-text">
-    <%= @kitchen.description %>
-    <br>
-    <%= @kitchen.address %> | <%= @kitchen.size %>
-  </p>
-  <hr>
-  <h4>Rent <%= @kitchen.title %></h4>
-    <div id='kitchen-booking-dates' data-unavailable="<%= @kitchen.unavailable_dates.to_json %>">
-      <%# if current_user %>
-        <%# if current_user.id != @kitchen.user_id  %>
-           <%= simple_form_for([@kitchen, @booking]) do |f| %>
-               <%= f.input :start_date, as: :string, type: :text %>
-               <%= f.input :end_date, as: :string, type: :text %>
-               <%= f.submit "Rent", class: "btn btn-primary" %>
-            <% end %>
-        <%# end %>
-      <%# end %>
+<div class="container-fluid py-3">
+  <div class="d-flex align-items-center mb-2">
+
+
+    <a href="#">
+      <% if @user.photo.attached? %>
+        <%= cl_image_tag @user.photo.key %>
+      <% else %>
+        <%= image_tag "user.png", class: "avatar-large avatar-bordered" %>
+      <% end %>
+      <p class="mb-0 text-center"><%= @kitchen.user.first_name %></p>
+    </a>
+  <h1 class="mb-0 ml-4"><%= @kitchen.title %></h1>
+</div>
+  <div class="container-fluid py-1">
+    <div class="row justify-content-between">
+      <div class="my-auto">
+        <p style="margin: 0px"><strong>Ratings: </strong>
+          <% (@kitchen.average_rating).times do %>
+            <i class="fas fa-star"></i>
+          <% end %>
+          <% (5 - @kitchen.average_rating).times do %>
+            <i class="far fa-star"></i>
+          <% end %>
+          ( <%= @kitchen.reviews.count %>
+          <% if @kitchen.reviews.count == 1 %>
+           <span>review</span> )
+          <% else %>
+            <span>reviews</span> )
+            <span> · </span>
+            <a href="#"><%= @kitchen.address %></a>
+          <% end %>
+        </p>
+      </div>
+      <div class="my-0">
+        <% if @user == @kitchen.user %>
+          <%= link_to "Update Kitchen", edit_kitchen_path(@kitchen), class: "btn btn-info" %>
+          <%= link_to "Delete Kitchen", kitchen_path(@kitchen), class: "btn btn-danger", method: :delete %>
+        <% end %>
+      </div>
     </div>
+  </div>
+
+  <div class="container-fluid py-3">
+    <div class="row">
+      <div class="col-md-7 m-0 p-0">
+        <% if @kitchen.photos.any? %>
+          <% @kitchen.photos.each do |photo| %>
+          <%= cl_image_tag photo.key, class: "card-img-top", style: "height: 50vh; border-radius: 20px" %>
+          <% end %>
+        <% else %>
+          <%= image_tag "kitchen_placeholder.jpg", class: "card-img-top rounded-20", style: "height: 50vh; border-radius: 20px" %>
+        <% end %>
+      </div>
+      <div class="col-md-5 pr-0">
+      <div id="map"
+        style="width: 100%; height: 50vh; border-radius: 20px"
+        data-markers="<%= @markers.to_json %>"
+        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+      </div>
+    </div>
+
+
+    <div class="card-text mt-3" style="height: 200px; width: 100%">
+      <%= @kitchen.description %>
+      <div class="short-line"></div>
+      <p class="my-3"><strong>Size: </strong> <%= @kitchen.size %> m2</p>
+      <div style="height: 120px">
+        <p class="mb-0"><strong>Amenities: </strong></p>
+        <% @kitchen.amenities.each do |amenity| %>
+          <span class="text-muted" ><%= amenity.name %> • </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
   <hr>
 
-  <p class="card-text">
-    <h4>Reviews</h4>
-    <br>
-    <% @kitchen.reviews.each do |review| %>
-      <p><strong>Rating: </strong>
-        <% (review.rating).times do %>
-          <i class="fas fa-star"></i>
-        <% end %>
-        <% (5 - review.rating).times do %>
-          <i class="far fa-star"></i>
-        <% end %>
-      </p>
-      <p><strong>Review: </strong><%= review.content %> </p>
-      <hr>
-      <% if review.reply %>
-        <p><strong>Reply from Owner: </strong><%= review.reply %> </p>
-      <% end %>
-      <hr>
-    <% end %>
-  </p>
+  <div class="container-fluid">
+    <div class="row justify-content-around" style="margin-bottom: 30px">
+      <div class="col pt-3" style="height: 160px">
+          <div class="d-flex justify-content-between pr-8">
+            <h4 class="my-auto">Reviews</h4>
+            <span class="my-auto my-0"><%= @kitchen.reviews.count %> reviews | Average Rating: <%= @kitchen.average_rating %> <i class="fas fa-star"></i></span>
+          </div>
+
+            <br>
+            <% @kitchen.reviews.each do |review| %>
+              <p><strong>Rating: </strong>
+                <% (review.rating).times do %>
+                  <i class="fas fa-star"></i>
+                <% end %>
+                <% (5 - review.rating).times do %>
+                  <i class="far fa-star"></i>
+                <% end %>
+              </p>
+              <p><strong>Review: </strong><%= review.content %> </p>
+              <% if review.reply %>
+                <p class="text-muted" style="text-indent"><strong><em>- Reply from Owner: </em></strong><%= review.reply %> </p>
+              <% end %>
+              <div class="short-line"></div>
+            <% end %>
+      </div>
+      <div class="card p-3" style="width: 40%; margin-right: 15px">
+        <div class="d-flex justify-content-between">
+          <h4>Rent <%= @kitchen.title %></h4>
+          <span class="d-flex"><h4 class="mb-0">$<%= @kitchen.price %></h4><p class="mb-0 mt-1">/night</p></span>
+        </div>
+            <div id='kitchen-booking-dates' data-unavailable="<%= @kitchen.unavailable_dates.to_json %>">
+        <%# if current_user %>
+          <%# if current_user.id != @kitchen.user_id  %>
+              <%= simple_form_for([@kitchen, @booking]) do |f| %>
+                 <%= f.input :start_date, as: :string, type: :text %>
+                 <%= f.input :end_date, as: :string, type: :text %>
+                 <%= f.submit "Rent", class: "btn btn-primary" %>
+              <% end %>
+          <%# end %>
+        <%# end %>
+    </div>
+
+      </div>
+    </div>
+  </div>
+
   <%#= link_to "Back", user_path, class: "btn btn-warning" %>
-</div>
+
+
 
 
 
