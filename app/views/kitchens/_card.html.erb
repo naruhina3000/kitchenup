@@ -7,7 +7,7 @@
       <%= image_tag "kitchen_placeholder.jpg", class: "card-img-top" %>
     <% end %>
   <div class="card-body p-3">
-    <h5 class="card-title m-0"><%= kitchen.title %></h5>
+    <%= link_to "#{kitchen.title}", kitchen, style: "color: black; font-size: x-large" %>
     <!-- <p class="card-text"><%= kitchen.description.truncate(50) %></p> -->
     <p class="card-text text-muted m-0"><%= kitchen.address %></p>
     <div class="short-line"></div>
@@ -29,3 +29,4 @@
     </p>
   </div>
 </div>
+

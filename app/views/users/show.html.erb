@@ -22,129 +22,143 @@
 </div>
 
 
-<% if current_user == @user %>
+<% if current_user != @user %>
 
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-favorites-tab" data-toggle="tab" href="#nav-favorites" role="tab" aria-controls="nav-favorites aria-selected="true">Favorites</a>
-    <a class="nav-item nav-link" id="nav-bookings-tab" data-toggle="tab" href="#nav-bookings" role="tab" aria-controls="nav-bookings" aria-selected="false">My Bookings</a>
-    <a class="nav-item nav-link" id="nav-bookings-received-tab" data-toggle="tab" href="#nav-bookings-received" role="tab" aria-controls="nav-bookings-received" aria-selected="false">Bookings Received</a>
-    <a class="nav-item nav-link" id="nav-my-kitchens-tab" data-toggle="tab" href="#nav-my-kitchens" role="tab" aria-controls="nav-my-kitchens" aria-selected="false">My Kitchens</a>
-  </div>
-</nav>
-
-
-<div class="tab-content" id="nav-tabContent">
-
-  <div class="tab-pane fade show active" id="nav-favorites" role="tabpanel" aria-labelledby="nav-favorites-tab">
-    <div class="container-fluid py-5">
-
-       <div class="row">
-         <% @my_favorites.each do |favorite| %>
-            <div class="col-md-4 my-4">
-                <%= render 'kitchens/card', kitchen: favorite.kitchen do %>
-                  <%= link_to "See more", favorite.kitchen, class: "btn btn-info" %>
-                  <% if current_user.has_favorite?(favorite.kitchen) %>
-                            <%= link_to favorite_path(current_user.has_favorite?(favorite.kitchen)), method: :delete, class: "bookmark" do %>
-                            <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
-                            <% end %>
-                            <% else %>
-                            <%= link_to kitchen_favorites_path(favorite.kitchen) , method: :post, class: "bookmark" do %>
-                            <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
-                            <% end %>
-                        <% end %>
-                <% end %>
-             </div>
-         <% end %>
-        </div>
-  </div>
-  </div>
-
-
-
-
-
-  <div class="tab-pane fade" id="nav-bookings" role="tabpanel" aria-labelledby="nav-bookings-tab">
-    <div class="container-fluid py-5">
-      <%= link_to "Rent a kitchen", kitchens_path, class: "btn btn-primary my-4" %>
-
-
-      <div class="row">
-        <% @bookings_requested.each do |booking| %>
-          <div class="col-md-4 my-4">
-            <%= render 'kitchens/card', kitchen: booking.kitchen do %>
-                <%= booking.kitchen.address %> | <%= booking.booking_status %>
-                <br>
-                <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
-                <br>
-
-              <% if (booking.booking_status == "pending") && Date.today() < (booking.start_date - 1) %>
-                <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
-              <% elsif booking.booking_status == "accepted" %>
-                <%= link_to "Pay", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
-              <% end %>
-              <hr>
-              <%= link_to  "#{booking.booking_status == "completed" ? 'Leave a review' : 'See Booking Details'}", booking_path(booking), class: "btn btn-info" %>
-              <hr>
-              <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-pane fade" id="nav-bookings-received" role="tabpanel" aria-labelledby="nav-bookings-received-tab">
-  <div class="container-fluid py-5">
-    <div class="row">
-
-      <% @bookings_received.each do |booking| %>
-        <div class="col-md-4 my-4">
-        <%= render 'kitchens/card', kitchen: booking.kitchen do %>
-            <%= booking.user.first_name.capitalize %>
-            <br>
-            <%= booking.kitchen.address %> | <%= booking.booking_status %>
-            <br>
-            <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
-            <br>
-              <% if booking.booking_status == "pending"  %>
-                  <%= link_to "Accept", accept_booking_path(booking), class: "btn btn-info", method: :patch %>
-                  <%= link_to "Decline", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
-              <% elsif (booking.booking_status == "accepted") && Date.today() < (booking.start_date - 1) %>
-                  <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
-              <% end %>
-            <%= link_to  "See Booking Details", booking_path(booking), class: "btn btn-info" %>
-            <hr>
-        <% end %>
-      </div>
-      <% end %>
-      </div>
-  </div>
-  </div>
-
-  <div class="tab-pane fade" id="nav-my-kitchens" role="tabpanel" aria-labelledby="nav-my-kitchens-tab">
-  <div class="container-fluid py-5">
+  <div class="container-fluid">
     <div class="row">
       <% @my_kitchens.each do |kitchen| %>
         <div class="col-md-4 my-4">
-
           <%= render 'kitchens/card', kitchen: kitchen do %>
-                Address: <%= kitchen.address %>
-                <br>
-                Size: <%= kitchen.size %> m²
-                <br>
-                <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
-                <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-danger", method: :delete %>
+            <div class="my-8">
+              <span class="text-muted"><strong>Size:</strong>  <%= kitchen.size %> m2 </span>
+              <span> | </span>
+              <span class="text-muted"><strong>Price:</strong> $<%= kitchen.price %>/day </span>
+            </div>
+            <div class="short-line"></div>
+            <div style="height: 140px">
+              <% kitchen.amenities.each do |amenity| %>
+                <span class="text-muted" ><%= amenity.name %> • </span>
+              <% end %>
+            </div>
+            <%= link_to "view kitchen", kitchen, class: "btn btn-info w-75 mb-3 mx-auto"%>
           <% end %>
         </div>
       <% end %>
     </div>
   </div>
+
+
+<% elsif current_user == @user %>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-favorites-tab" data-toggle="tab" href="#nav-favorites" role="tab" aria-controls="nav-favorites aria-selected="true">Favorites</a>
+      <a class="nav-item nav-link" id="nav-bookings-tab" data-toggle="tab" href="#nav-bookings" role="tab" aria-controls="nav-bookings" aria-selected="false">My Bookings</a>
+      <a class="nav-item nav-link" id="nav-bookings-received-tab" data-toggle="tab" href="#nav-bookings-received" role="tab" aria-controls="nav-bookings-received" aria-selected="false">Bookings Received</a>
+      <a class="nav-item nav-link" id="nav-my-kitchens-tab" data-toggle="tab" href="#nav-my-kitchens" role="tab" aria-controls="nav-my-kitchens" aria-selected="false">My Kitchens</a>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+
+    <div class="tab-pane fade show active" id="nav-favorites" role="tabpanel" aria-labelledby="nav-favorites-tab">
+      <div class="container-fluid py-5">
+         <div class="row">
+           <% @my_favorites.each do |favorite| %>
+              <div class="col-md-4 my-4">
+                  <%= render 'kitchens/card', kitchen: favorite.kitchen do %>
+                    <%= link_to "See more", favorite.kitchen, class: "btn btn-info" %>
+                    <% if current_user.has_favorite?(favorite.kitchen) %>
+                              <%= link_to favorite_path(current_user.has_favorite?(favorite.kitchen)), method: :delete, class: "bookmark" do %>
+                              <%= image_tag("bookmark-solid.svg", alt: "current-favorite") %>
+                              <% end %>
+                              <% else %>
+                              <%= link_to kitchen_favorites_path(favorite.kitchen) , method: :post, class: "bookmark" do %>
+                              <%= image_tag("bookmark-regular.svg", alt: "no-favorite") %>
+                              <% end %>
+                          <% end %>
+                  <% end %>
+               </div>
+           <% end %>
+          </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-bookings" role="tabpanel" aria-labelledby="nav-bookings-tab">
+      <div class="container-fluid py-5">
+        <%= link_to "Rent a kitchen", kitchens_path, class: "btn btn-primary my-4" %>
+
+
+        <div class="row">
+          <% @bookings_requested.each do |booking| %>
+            <div class="col-md-4 my-4">
+              <%= render 'kitchens/card', kitchen: booking.kitchen do %>
+                  <%= booking.kitchen.address %> | <%= booking.booking_status %>
+                  <br>
+                  <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
+                  <br>
+
+                <% if (booking.booking_status == "pending") && Date.today() < (booking.start_date - 1) %>
+                  <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
+                <% elsif booking.booking_status == "accepted" %>
+                  <%= link_to "Pay", confirm_booking_path(booking), class: "btn btn-info", method: :patch %>
+                <% end %>
+                <hr>
+                <%= link_to  "#{booking.booking_status == "completed" ? 'Leave a review' : 'See Booking Details'}", booking_path(booking), class: "btn btn-info" %>
+                <hr>
+                <%= link_to "See #{booking.kitchen.title}", kitchen_path(booking.kitchen), class: "btn btn-info" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-bookings-received" role="tabpanel" aria-labelledby="nav-bookings-received-tab">
+      <div class="container-fluid py-5">
+        <div class="row">
+          <% @bookings_received.each do |booking| %>
+            <div class="col-md-4 my-4">
+              <%= render 'kitchens/card', kitchen: booking.kitchen do %>
+                <%= booking.user.first_name.capitalize %>
+                <br>
+                <%= booking.kitchen.address %> | <%= booking.booking_status %>
+                <br>
+                <p> Rent kitchen on: <%= booking.start_date %> - <%= booking.end_date %>
+                <br>
+                <% if booking.booking_status == "pending"  %>
+                    <%= link_to "Accept", accept_booking_path(booking), class: "btn btn-info", method: :patch %>
+                    <%= link_to "Decline", cancel_booking_path(booking), class: "btn btn-info", method: :patch %>
+                <% elsif (booking.booking_status == "accepted") && Date.today() < (booking.start_date - 1) %>
+                    <%= link_to "Cancel Booking", cancel_booking_path(booking), class: "btn btn-warning", method: :patch %>
+                <% end %>
+                <%= link_to  "See Booking Details", booking_path(booking), class: "btn btn-info" %>
+                <hr>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-my-kitchens" role="tabpanel" aria-labelledby="nav-my-kitchens-tab">
+    <div class="container-fluid py-5">
+      <div class="row">
+        <% @my_kitchens.each do |kitchen| %>
+          <div class="col-md-4 my-4">
+
+            <%= render 'kitchens/card', kitchen: kitchen do %>
+                  Address: <%= kitchen.address %>
+                  <br>
+                  Size: <%= kitchen.size %> m²
+                  <br>
+                  <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
+                  <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-danger", method: :delete %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    </div>
   </div>
-
-
-</div>
-
 <% end %>
 
 
