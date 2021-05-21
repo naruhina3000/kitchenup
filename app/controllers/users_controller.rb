@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:show]
 
     def show
       @user = User.find(params[:id])
@@ -9,15 +10,23 @@ class UsersController < ApplicationController
       @bookings_received = Booking.joins(:kitchen).where(kitchens: {user: @user})
       @my_kitchens = Kitchen.where(user: @user)
       @my_favorites = Favorite.where(user: @user)
+      @markers = @my_kitchens.map do |kitchen|
+      {
+        lat: kitchen.latitude,
+        lng: kitchen.longitude,
+        # infoWindow: render_to_string(partial: "info_window", locals: { kitchen: kitchen }),
+        image_url: helpers.asset_url('kitchen.svg')
+      }
+      end
     end
 
     def edit
       @user = User.find(params[:id])
     end
-  
+
     def update
       @user = User.find(params[:id])
-  
+
       if @user.update(user_params)
         redirect_to @user
       else
@@ -31,3 +40,4 @@ class UsersController < ApplicationController
       params.require(:user).permit(:first_name, :last_name, :phone_number, :photo)
     end
 end
+

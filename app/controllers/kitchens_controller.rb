@@ -46,10 +46,13 @@ class KitchensController < ApplicationController
     @booking = Booking.new
     @user = current_user
     @markers =
-      {
+      [{
         lat: @kitchen.latitude,
-        lng: @kitchen.longitude
-      }
+        lng: @kitchen.longitude,
+        infoWindow: render_to_string(partial: "info_window", locals: { kitchen: @kitchen }),
+        image_url: helpers.asset_url('kitchen.svg')
+
+      }]
   end
 
   def edit

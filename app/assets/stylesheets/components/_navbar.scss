@@ -18,8 +18,9 @@
 #nav-tab {
   width: calc(100% - 30px);
   margin: auto;
-  position: relative;
-  top: 40px;
+  margin-top: 16px
+  // position: relative;
+  // top: 40px;
 }
 
 .navbar-nav .dropdown-menu {
