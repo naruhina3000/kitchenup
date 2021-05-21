@@ -2,19 +2,21 @@ class BookingsController < ApplicationController
   before_action :set_booking, only: [:edit, :show, :clean, :status, :accept, :confirm, :cancel]
 
   def index
-    redirect_to current_user 
+    redirect_to current_user
   end
 
 
   def show
-      @review = Review.new
+    @review = Review.new
     # @booking = Booking.where(id: @booking)
     @kitchen = @booking.kitchen
     @markers =
-    {
+    [{
       lat: @kitchen.latitude,
-      lng: @kitchen.longitude
-    }
+      lng: @kitchen.longitude,
+      image_url: helpers.asset_url('kitchen.svg')
+
+    }]
   end
 
 
