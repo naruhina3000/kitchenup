@@ -1,13 +1,87 @@
 <div class="container py-3">
-  <h1><%= @booking.confirmation_code %></h1>
-  <p class="card-text">
-    <%= @booking.booking_status %>
-    <br>
-    <p> Rent kitchen on: <%= @booking.start_date %> - <%= @booking.end_date %>
-  </p>
+<div class="card-product">
+<div class="card-product-infos">
+  <h1>Booking Code: <%= @booking.confirmation_code %></h1>
+  <p> Current Status: <strong><%= @booking.booking_status %></strong></p>
+  <p> Rental dates: <strong><%= @booking.start_date %> - <%= @booking.end_date %></strong></p>
+  <%= link_to "Back to my profile", user_path, class: "btn btn-info mt-2" %>
+
+  <% if (@booking.booking_status == "pending") && Date.today() < (@booking.start_date - 1) %>
+    <%= link_to "Cancel Booking", cancel_booking_path(@booking), class: "btn btn-warning mt-2", method: :patch %>
+  <% elsif @booking.booking_status == "accepted" %>
+    <%= link_to "Pay", confirm_booking_path(@booking), class: "btn btn-info mt-2", method: :patch %>
+  <% end %>
+</div>
+</div>
+<hr>
+
+<div class="container py-3">
+  <div class="d-flex align-items-center mb-2">
+  <h2>Rented Kitchen: <%= link_to "#{@kitchen.title}", kitchen_path(@kitchen) %></h2>
+</div>
+  <div class="container py-1">
+    <div class="row justify-content-between">
+      <div class="my-auto">
+        <p style="margin: 0px"><strong>Ratings: </strong>
+          <% (@kitchen.average_rating).times do %>
+            <i class="fas fa-star"></i>
+          <% end %>
+          <% (5 - @kitchen.average_rating).times do %>
+            <i class="far fa-star"></i>
+          <% end %>
+          ( <%= @kitchen.reviews.count %>
+          <% if @kitchen.reviews.count == 1 %>
+           <span>review</span> )
+          <% else %>
+            <span>reviews</span> )
+            <span> · </span>
+            <a href="#"><%= @kitchen.address %></a>
+          <% end %>
+        </p>
+      </div>
+      <div class="my-0">
+        <% if @user == @kitchen.user %>
+          <%= link_to "Update Kitchen", edit_kitchen_path(@kitchen), class: "btn btn-info" %>
+          <%= link_to "Delete Kitchen", kitchen_path(@kitchen), class: "btn btn-danger", method: :delete %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-3">
+    <div class="row">
+      <div class="col-md-7 m-0 p-0">
+        <% if @kitchen.photos.any? %>
+          <% @kitchen.photos.each do |photo| %>
+          <%= cl_image_tag photo.key, class: "card-img-top", style: "height: 50vh; border-radius: 20px" %>
+          <% end %>
+        <% else %>
+          <%= image_tag "kitchen_placeholder.jpg", class: "card-img-top rounded-20", style: "height: 50vh; border-radius: 20px" %>
+        <% end %>
+      </div>
+      <div class="col-md-5 pr-0">
+      <div id="map"
+        style="width: 100%; height: 50vh; border-radius: 20px"
+        data-markers="<%= @markers.to_json %>"
+        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+      </div>
+    </div>
+
+    <div class="card-text mt-3" style="height: 200px; width: 100%">
+      <%= @kitchen.description %>
+      <div class="short-line"></div>
+      <p class="my-3"><strong>Size: </strong> <%= @kitchen.size %> m2</p>
+      <div style="height: 120px">
+        <p class="mb-0"><strong>Amenities: </strong></p>
+        <% @kitchen.amenities.each do |amenity| %>
+          <span class="text-muted" ><%= amenity.name %> • </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
   <hr>
-
   <% if @booking.review&.id  %>
     <p class="card-text">
       <h4>Review</h4>
@@ -42,8 +116,11 @@
       <% end %>
 
   <% end %>
-  <%#= link_to "Back", user_path, class: "btn btn-warning" %>
 </div>
+</div>
+
+
+
 
 
 

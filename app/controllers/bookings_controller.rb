@@ -1,14 +1,20 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:edit, :show, :clean, :status, :accept, :confirm, :cancel]
 
-  # def index
-  #   @bookings = Booking.all
-  # end
+  def index
+    redirect_to current_user 
+  end
 
 
   def show
       @review = Review.new
     # @booking = Booking.where(id: @booking)
+    @kitchen = @booking.kitchen
+    @markers =
+    {
+      lat: @kitchen.latitude,
+      lng: @kitchen.longitude
+    }
   end
 
 
