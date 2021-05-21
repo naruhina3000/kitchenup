@@ -22,52 +22,9 @@
 </div>
 
 
-<% if current_user != @user %>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-7 px-0">
-
-        <div class="container-fluid">
-          <div class="row">
-            <% @my_kitchens.each do |kitchen| %>
-              <div class="col-md-6 pl-0 my-4">
-                <div class="card m-0">
-                <%= render 'kitchens/card', kitchen: kitchen do %>
-                  <div class="my-8">
-                    <span class="text-muted"><strong>Size:</strong>  <%= kitchen.size %> m2 </span>
-                    <span> | </span>
-                    <span class="text-muted"><strong>Price:</strong> $<%= kitchen.price %>/day </span>
-                  </div>
-                  <div class="short-line"></div>
-                  <div style="height: 130px">
-                    <% kitchen.amenities.each do |amenity| %>
-                      <span class="text-muted" ><%= amenity.name %> • </span>
-                    <% end %>
-                  </div>
-                <% end %>
-                <%= link_to "view kitchen", kitchen, class: "btn btn-info w-75 mb-3 mx-auto"%>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-5">
-      <div id="map"
-           style="width: 100%; height: calc(100vh - 66px);"
-           data-markers="<%= @markers.to_json %>"
-           data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
-      </div>
-
-     </div>
-    </div>
-  </div>
-
-<% elsif current_user == @user %>
-
+<% if current_user == @user %>
   <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <div class="nav nav-tabs" style="z-index: 4" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="nav-favorites-tab" data-toggle="tab" href="#nav-favorites" role="tab" aria-controls="nav-favorites aria-selected="true">Favorites</a>
       <a class="nav-item nav-link" id="nav-bookings-tab" data-toggle="tab" href="#nav-bookings" role="tab" aria-controls="nav-bookings" aria-selected="false">My Bookings</a>
       <a class="nav-item nav-link" id="nav-bookings-received-tab" data-toggle="tab" href="#nav-bookings-received" role="tab" aria-controls="nav-bookings-received" aria-selected="false">Bookings Received</a>
@@ -81,10 +38,10 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-7 px-0">
-            <div class="container-fluid py-5">
+            <div class="container-fluid py-4">
                <div class="row">
                  <% @my_favorites.each do |favorite| %>
-                    <div class="col-md-6 my-4">
+                    <div class="col-md-6 mb-4">
                         <%= render 'kitchens/card', kitchen: favorite.kitchen do %>
                           <div class="my-8">
                             <span class="text-muted"><strong>Size:</strong>  <%= favorite.kitchen.size %> m2 </span>
@@ -114,7 +71,7 @@
           </div>
           <div class="col-md-5">
             <div id="map"
-                 style="width: 100%; height: calc(100vh - 66px);"
+                 style="width: 100%; height: 100vh"
                  data-markers="<%= @markers.to_json %>"
                  data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
             </div>
@@ -181,25 +138,70 @@
     </div>
 
     <div class="tab-pane fade" id="nav-my-kitchens" role="tabpanel" aria-labelledby="nav-my-kitchens-tab">
-    <div class="container-fluid py-5">
-      <div class="row">
-        <% @my_kitchens.each do |kitchen| %>
-          <div class="col-md-4 my-4">
+      <div class="container-fluid py-5">
+        <div class="row">
+          <% @my_kitchens.each do |kitchen| %>
+            <div class="col-md-4 my-4">
 
-            <%= render 'kitchens/card', kitchen: kitchen do %>
-                  Address: <%= kitchen.address %>
-                  <br>
-                  Size: <%= kitchen.size %> m²
-                  <br>
-                  <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
-                  <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-danger", method: :delete %>
-            <% end %>
-          </div>
-        <% end %>
+              <%= render 'kitchens/card', kitchen: kitchen do %>
+                    Address: <%= kitchen.address %>
+                    <br>
+                    Size: <%= kitchen.size %> m²
+                    <br>
+                    <%= link_to "Edit Kitchen", edit_kitchen_path(kitchen), class: "btn btn-info" %>
+                    <%= link_to "Delete Kitchen", kitchen_path(kitchen), class: "btn btn-danger", method: :delete %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
+  </div>
+<% else %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7 px-0">
+
+        <div class="container-fluid">
+          <div class="row">
+            <% @my_kitchens.each do |kitchen| %>
+              <div class="col-md-6 pl-0 my-4">
+                <div class="card m-0">
+                <%= render 'kitchens/card', kitchen: kitchen do %>
+                  <div class="my-8">
+                    <span class="text-muted"><strong>Size:</strong>  <%= kitchen.size %> m2 </span>
+                    <span> | </span>
+                    <span class="text-muted"><strong>Price:</strong> $<%= kitchen.price %>/day </span>
+                  </div>
+                  <div class="short-line"></div>
+                  <div style="height: 130px">
+                    <% kitchen.amenities.each do |amenity| %>
+                      <span class="text-muted" ><%= amenity.name %> • </span>
+                    <% end %>
+                  </div>
+                <% end %>
+                <%= link_to "view kitchen", kitchen, class: "btn btn-info w-75 mb-3 mx-auto"%>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+      <div id="map"
+           style="width: 100%; height: calc(100vh - 66px);"
+           data-markers="<%= @markers.to_json %>"
+           data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+
+     </div>
     </div>
   </div>
+
+
+
 <% end %>
 
 

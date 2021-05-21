@@ -64,3 +64,11 @@
   width: 32px;
   border-top: 1px solid rgb(221, 221, 221) !important;
 }
+
+.card-body {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  min-height: 1px;
+  flex-grow: 1;
+}
