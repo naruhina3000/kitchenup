@@ -3,15 +3,15 @@
 <div class="container-fluid py-3">
   <div class="d-flex align-items-center mb-2">
 
-
     <a href="#">
-      <% if @user.photo.attached? %>
-        <%= cl_image_tag @user.photo.key %>
+      <% if @kitchen.user.photo.attached? %>
+        <%= cl_image_tag @kitchen.user.photo.key, class: "avatar-large avatar-bordered" %>
       <% else %>
         <%= image_tag "user.png", class: "avatar-large avatar-bordered" %>
       <% end %>
       <p class="mb-0 text-center"><%= @kitchen.user.first_name %></p>
     </a>
+
   <h1 class="mb-0 ml-4"><%= @kitchen.title %></h1>
 </div>
   <div class="container-fluid py-1">
